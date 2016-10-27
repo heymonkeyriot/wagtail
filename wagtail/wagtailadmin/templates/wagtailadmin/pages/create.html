@@ -24,23 +24,8 @@
 
         {% page_permissions parent_page as parent_page_perms %}
         <footer>
-            <ul>
-                <li class="actions">
-                    <div class="dropdown dropup dropdown-button match-width">
-                        <button type="submit" class="button action-save button-longrunning" tabindex="3" data-clicked-text="{% trans 'Saving...' %}"><span class="icon icon-spinner"></span><em>{% trans 'Save draft' %}</em></button>
-                        <div class="dropdown-toggle icon icon-arrow-up"></div>
-                        <ul role="menu">
-                            {% if parent_page_perms.can_publish_subpage %}
-                                <li>
-                                    <button type="submit" name="action-publish" value="action-publish" class="button button-longrunning" tabindex="3" data-clicked-text="{% trans 'Publishing...' %}" {% if page.locked %}disabled {% endif %}><span class="icon icon-spinner"></span><em>{% trans 'Publish' %}</em></button>
-                                </li>
-                            {% endif %}
-                            <li><input type="submit" name="action-submit" value="{% trans 'Submit for moderation' %}" class="button" /></li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li class="actions preview">
+            <ul class="actions">
+                <li class="action preview">
                     {% trans 'Preview' as preview_label %}
                     {% if preview_modes|length > 1 %}
                         <div class="dropdown dropup dropdown-button match-width">
@@ -57,6 +42,23 @@
                     {% else %}
                         {% include "wagtailadmin/pages/_preview_button_on_create.html" with label=preview_label icon=1 %}
                     {% endif %}
+                </li>
+                <li class="action">
+                    {# <div class="dropdown dropup dropdown-button match-width"> #}
+                        <button type="submit" class="button action-save button-longrunning" tabindex="3" data-clicked-text="{% trans 'Saving...' %}"><span class="icon icon-spinner"></span><em>{% trans 'Save draft' %}</em></button>
+                </li>
+                {% if parent_page_perms.can_publish_subpage %}
+                    <li class="action">
+                            {# <div class="dropdown-toggle icon icon-arrow-up"></div> #}
+                            {# <ul role="menu"> #}        
+                        <button type="submit" name="action-publish" value="action-publish" class="button button-longrunning" tabindex="3" data-clicked-text="{% trans 'Publishing...' %}" {% if page.locked %}disabled {% endif %}><span class="icon icon-spinner"></span><em>{% trans 'Publish' %}</em></button>
+                    </li>
+                {% endif %}
+                <li class="action">
+                    <input type="submit" name="action-submit" value="{% trans 'Submit for moderation' %}" class="button" />
+                </li>
+                        {# </ul> #}
+                    {# </div> #}
                 </li>
             </ul>
         </footer>

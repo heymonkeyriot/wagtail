@@ -34,53 +34,8 @@
         {% endif %}
 
         <footer>
-            <ul>
-                <li class="actions">
-                    <div class="dropdown dropup dropdown-button match-width {% if is_revision %}warning{% endif %}">
-                        <button type="submit" class="button action-save button-longrunning {% if is_revision %}warning{% endif %}" tabindex="3" data-clicked-text="{% trans 'Saving...' %}" {% if page.locked %}disabled {% endif %}><span class="icon icon-spinner"></span><em>{% if page.locked %}{% trans 'Page locked' %}{% else %}{% if is_revision %}{% trans 'Replace current draft' %}{% else %}{% trans 'Save draft' %}{% endif %}{% endif %}</em></button>
-
-                        {% if not page.locked %}
-                            <div class="dropdown-toggle icon icon-arrow-up"></div>
-                            <ul role="menu">
-                                {% if not is_revision and page_perms.can_unpublish %}
-                                    <li><a href="{% url 'wagtailadmin_pages:unpublish' page.id %}">{% trans 'Unpublish' %}</a></li>
-                                {% endif %}
-                                {% if not is_revision and page_perms.can_delete %}
-                                    <li><a href="{% url 'wagtailadmin_pages:delete' page.id %}" class="shortcut">{% trans 'Delete' %}</a></li>
-                                {% endif %}
-                                {% if page_perms.can_publish %}
-                                    <li>
-                                        <button type="submit" name="action-publish" value="action-publish" class="button button-longrunning {% if is_revision %}warning{% endif %}" tabindex="3" data-clicked-text="{% trans 'Publishing...' %}" {% if page.locked %}disabled {% endif %}><span class="icon icon-spinner"></span><em>{% if is_revision %}{% trans 'Publish this revision' %}{% else %}{% trans 'Publish' %}{% endif %}</em></button>
-                                    </li>
-                                {% endif %}
-                                {% if not is_revision %}
-                                    <li><input type="submit" name="action-submit" value="{% trans 'Submit for moderation' %}" class="button" /></li>
-                                {% endif %}
-                            </ul>
-                        {% endif %}
-                    </div>
-                </li>
-
-                <li class="actions preview">
-                    {% trans 'Preview' as preview_label %}
-                    {% if preview_modes|length > 1 %}
-                        <div class="dropdown dropup dropdown-button match-width">
-                            {% include "wagtailadmin/pages/_preview_button_on_edit.html" with label=preview_label icon=1 %}
-                            <div class="dropdown-toggle icon icon-arrow-up"></div>
-                            <ul role="menu">
-                                {% for mode_name, mode_display_name in preview_modes %}
-                                    <li>
-                                        {% include "wagtailadmin/pages/_preview_button_on_edit.html" with mode=mode_name label=mode_display_name %}
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    {% else %}
-                        {% include "wagtailadmin/pages/_preview_button_on_edit.html" with label=preview_label icon=1 %}
-                    {% endif %}
-                </li>
-
-                <li class="meta">
+        <ul class="meta-details">
+            <li class="meta-detail">
                     <p class="modified">
                         {% if page.get_latest_revision %}
                             {% blocktrans with last_mod=page.get_latest_revision.created_at %}Last modified: {{ last_mod }}{% endblocktrans %}
@@ -94,6 +49,57 @@
                         {% endif %}
                     </p>
                 </li>
+            </ul>
+            <ul class="actions">
+                <li class="action preview">
+                    {% trans 'Preview' as preview_label %}
+                    {% if preview_modes|length > 1 %}
+                        {# <div class="dropdown dropup dropdown-button match-width"> #}
+                            {% include "wagtailadmin/pages/_preview_button_on_edit.html" with label=preview_label icon=1 %}
+                            {# <div class="dropdown-toggle icon icon-arrow-up"></div> #}
+                            <ul role="menu">
+                                {% for mode_name, mode_display_name in preview_modes %}
+                                    <li>
+                                        {% include "wagtailadmin/pages/_preview_button_on_edit.html" with mode=mode_name label=mode_display_name %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {# </div> #}
+                    {% else %}
+                        {% include "wagtailadmin/pages/_preview_button_on_edit.html" with label=preview_label icon=1 %}
+                    {% endif %}
+                </li>
+                <li class="action">
+                    {# <div class="dropdown dropup dropdown-button match-width {% if is_revision %}warning{% endif %}"> #}
+                    <button type="submit" class="button action-save button-longrunning {% if is_revision %}warning{% endif %}" tabindex="3" data-clicked-text="{% trans 'Saving...' %}" {% if page.locked %}disabled {% endif %}><span class="icon icon-spinner"></span><em>{% if page.locked %}{% trans 'Page locked' %}{% else %}{% if is_revision %}{% trans 'Replace current draft' %}{% else %}{% trans 'Save draft' %}{% endif %}{% endif %}</em></button>
+                </li>
+                {% if not page.locked %}
+                            {# <div class="dropdown-toggle icon icon-arrow-up"></div> #}
+                            {# <ul role="menu"> #}
+                    {% if page_perms.can_publish %}
+                        <li class="action">
+                            <button type="submit" name="action-publish" value="action-publish" class="button button-longrunning {% if is_revision %}warning{% endif %}" tabindex="3" data-clicked-text="{% trans 'Publishing...' %}" {% if page.locked %}disabled {% endif %}><span class="icon icon-spinner"></span><em>{% if is_revision %}{% trans 'Publish this revision' %}{% else %}{% trans 'Publish' %}{% endif %}</em></button>
+                        </li>
+                    {% endif %}
+                    {% if not is_revision %}
+                        <li class="action">
+                            <input type="submit" name="action-submit" value="{% trans 'Submit for moderation' %}" class="button" />
+                        </li>
+                    {% endif %}
+                    {% if not is_revision and page_perms.can_delete %}
+                        <li class="delete">
+                            <a href="{% url 'wagtailadmin_pages:delete' page.id %}" class="shortcut button">{% trans 'Delete' %}</a>
+                        </li>
+                    {% endif %}
+                    {% if not is_revision and page_perms.can_unpublish %}
+                        <li class="unpublish">
+                            <a href="{% url 'wagtailadmin_pages:unpublish' page.id %}" class="button">{% trans 'Unpublish' %}</a>
+                        </li>
+                    {% endif %}
+                {% endif %}
+                    {# </div> #}
+                </li>
+                </ul>
             </ul>
         </footer>
     </form>
