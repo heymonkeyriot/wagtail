@@ -14,6 +14,7 @@
             <div class="left col9">
                 <h1 class="icon icon-doc-empty-inverse">{% blocktrans with title=page.get_admin_display_title page_type=content_type.model_class.get_verbose_name %}Editing {{ page_type }} <span>{{ title }}</span>{% endblocktrans %}</h1>
             </div>
+            {% comment %}
             <div class="right col3">
                 {% trans "Status" %}
                 {% include "wagtailadmin/shared/page_status_tag.html" with page=page %}
@@ -21,6 +22,7 @@
                 {% include "wagtailadmin/pages/_privacy_switch.html" with page=page page_perms=page_perms only %}
                 {% include "wagtailadmin/pages/_lock_switch.html" %}
             </div>
+            {% endcomment %}
         </div>
     </header>
 
@@ -35,20 +37,30 @@
 
         <footer>
         <ul class="meta-details">
-            <li class="meta-detail">
-                    <p class="modified">
-                        {% if page.get_latest_revision %}
-                            {% blocktrans with last_mod=page.get_latest_revision.created_at %}Last modified: {{ last_mod }}{% endblocktrans %}
-                            {% if page.get_latest_revision.user %}
-                                {% blocktrans with modified_by=page.get_latest_revision.user.get_full_name|default:page.get_latest_revision.user.get_username %}by {{ modified_by }}{% endblocktrans %}
-                                {% if page.get_latest_revision.user.email %}
-                                    <span class="avatar small icon icon-user"><img src="{% gravatar_url page.get_latest_revision.user.email 25 %}" /></span>
-                                {% endif %}
+            <li class="meta-detail revisions">
+                <p class="modified">
+                    {% if page.get_latest_revision %}
+                        {% blocktrans with last_mod=page.get_latest_revision.created_at %}Last modified: {{ last_mod }}{% endblocktrans %}
+                        {% if page.get_latest_revision.user %}
+                            {% blocktrans with modified_by=page.get_latest_revision.user.get_full_name|default:page.get_latest_revision.user.get_username %}by {{ modified_by }}{% endblocktrans %}
+                            {% if page.get_latest_revision.user.email %}
+                                <span class="avatar small icon icon-user"><img src="{% gravatar_url page.get_latest_revision.user.email 25 %}" /></span>
                             {% endif %}
-                            <a href="{% url 'wagtailadmin_pages:revisions_index' page.id %}" class="underlined">{% trans 'Revisions' %}</a>
                         {% endif %}
-                    </p>
-                </li>
+                        <a href="{% url 'wagtailadmin_pages:revisions_index' page.id %}" class="underlined">{% trans 'Revisions' %}</a>
+                    {% endif %}
+                </p>
+            </li>
+            <li class="meta-detail">
+                {% trans "Status" %}
+                {% include "wagtailadmin/shared/page_status_tag.html" with page=page %}
+            </li>
+            <li class="meta-detail">
+                {% include "wagtailadmin/pages/_privacy_switch.html" with page=page page_perms=page_perms only %}
+            </li>
+            <li class="meta-detail">
+                {% include "wagtailadmin/pages/_lock_switch.html" %}
+            </li>
             </ul>
             <ul class="actions">
                 <li class="action preview">

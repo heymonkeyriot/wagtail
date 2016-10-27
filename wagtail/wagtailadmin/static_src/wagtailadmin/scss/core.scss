@@ -186,8 +186,18 @@ footer {
     
     ul.meta-details {
         background-color: $color-teal-darker;
+        min-height: 2em;
         padding: 6px 6px 6px 40px;
         width: 100%;
+        
+        .meta-detail {
+            float: left;
+            margin-right: $grid-gutter-width / 2;
+        }
+
+        .revisions {
+            margin-right: 60px;
+        }
 
         p {
             margin-bottom: 0;
