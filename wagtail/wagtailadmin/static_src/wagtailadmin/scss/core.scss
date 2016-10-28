@@ -125,10 +125,11 @@ footer {
     border-radius: 0;
     box-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
     background: $color-teal-dark;
+    display: table;
     position: fixed;
     bottom: 0;
     // padding: 0.5em;
-    width: 90%;
+    width: 88%;
     margin: 0;
     color: $color-white;
 
@@ -164,13 +165,19 @@ footer {
 
     ul.actions {
         // width: 250px;
+        display: table-footer-group;
         margin-right: $grid-gutter-width / 2;
-        min-height: 36px;
-        padding: 12px 12px 12px 40px;
+        // min-height: 36px;
+        // padding: 12px 12px 12px 40px;
 
         li {
             float: left;
-            margin-right: $grid-gutter-width / 2;
+            margin: 12px $grid-gutter-width / 2 12px auto;
+
+            &:first-of-type {
+                margin-left: 50px;
+                // To deal with table-footer-group issue
+            }
 
             &:last-of-type {
                 margin-right: 0;
@@ -186,13 +193,19 @@ footer {
     
     ul.meta-details {
         background-color: $color-teal-darker;
-        min-height: 2em;
-        padding: 6px 6px 6px 40px;
+        display: table-header-group;
+        // min-height: 2em;
+        // padding: 6px 6px 6px 40px;
         width: 100%;
         
         .meta-detail {
             float: left;
-            margin-right: $grid-gutter-width / 2;
+            margin: 8px $grid-gutter-width / 2 6px auto;
+
+            &:first-of-type {
+                margin-left: 50px;
+                // To deal with table-footer-group issue
+            }
         }
 
         .revisions {
