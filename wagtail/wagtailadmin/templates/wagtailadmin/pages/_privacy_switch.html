@@ -6,7 +6,26 @@
 {% endif %}
 
 <div class="privacy-indicator {% if is_public %}public{% else %}private{% endif %}">
-    {% trans "Privacy" %}
+    {% trans "Privacy" %}:
+        <span class="label-public attribute">{% trans 'Public' %}</span>
+        <span class="label-private attribute">{% trans 'Private' %}</span>
+
+    {% if page_perms.can_set_view_restrictions %}
+        (<a href="{% url 'wagtailadmin_pages:set_privacy' page.id %}" class="underlined action-set-privacy">Edit</a>)
+    {% endif %}
+</div>
+
+
+{% comment %}
+    {% load i18n wagtailadmin_tags %}
+
+{% test_page_is_public page as is_public %}
+{% if not page_perms %}
+    {% page_permissions page as page_perms %}
+{% endif %}
+
+<div class="privacy-indicator {% if is_public %}public{% else %}private{% endif %}">
+    {% trans "Privacy" %}:
     {% if page_perms.can_set_view_restrictions %}
         <a href="{% url 'wagtailadmin_pages:set_privacy' page.id %}" class="status-tag primary  action-set-privacy">
             {# labels are shown/hidden in CSS according to the 'private' / 'public' class on view-permission-indicator #}
@@ -21,3 +40,5 @@
         {% endif %}
     {% endif %}
 </div>
+
+{% endcomment %}

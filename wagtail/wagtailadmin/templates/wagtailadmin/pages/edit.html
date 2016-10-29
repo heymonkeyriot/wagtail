@@ -91,22 +91,7 @@
         </form>
         
             <ul class="meta-details">
-            <li class="meta-detail revisions">
-                <p class="modified">
-                    {% if page.get_latest_revision %}
-                        {% blocktrans with last_mod=page.get_latest_revision.created_at %}Last modified: {{ last_mod }}{% endblocktrans %}
-                        {% if page.get_latest_revision.user %}
-                            {% blocktrans with modified_by=page.get_latest_revision.user.get_full_name|default:page.get_latest_revision.user.get_username %}by {{ modified_by }}{% endblocktrans %}
-                            {% if page.get_latest_revision.user.email %}
-                                <span class="avatar small icon icon-user"><img src="{% gravatar_url page.get_latest_revision.user.email 25 %}" /></span>
-                            {% endif %}
-                        {% endif %}
-                        <a href="{% url 'wagtailadmin_pages:revisions_index' page.id %}" class="underlined">{% trans 'Revisions' %}</a>
-                    {% endif %}
-                </p>
-            </li>
             <li class="meta-detail">
-                {% trans "Status" %}
                 {% include "wagtailadmin/shared/page_status_tag.html" with page=page %}
             </li>
             <li class="meta-detail">
@@ -114,6 +99,9 @@
             </li>
             <li class="meta-detail">
                 {% include "wagtailadmin/pages/_lock_switch.html" %}
+            </li>
+            <li class="meta-detail">
+                {% include "wagtailadmin/pages/_modified_detail.html" with page=page %}
             </li>
             </ul>
         </footer>

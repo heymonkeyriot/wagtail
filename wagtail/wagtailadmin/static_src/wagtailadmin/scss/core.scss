@@ -133,6 +133,10 @@ footer {
     margin: 0;
     color: $color-white;
 
+    .attribute {
+        font-weight: bold;
+    }
+
     .button {
         background-color: $color-white;
         color: $color-teal-dark;
@@ -205,6 +209,28 @@ footer {
             &:first-of-type {
                 margin-left: 50px;
                 // To deal with table-footer-group issue
+            }
+
+            .underlined {
+
+                &:hover {
+                    border-bottom: 0;
+                }
+            }
+        }
+
+        form {
+            display: inline;
+
+            .unbutton {
+                border-bottom: 1px solid currentColor;
+                font-weight: 300;
+                margin: -3px -3px 0 -3px;
+                text-transform: capitalize;
+
+                &:hover {
+                    border-bottom: 0;
+                }
             }
         }
 

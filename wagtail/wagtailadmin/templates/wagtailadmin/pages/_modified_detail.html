@@ -1,0 +1,18 @@
+{% load i18n wagtailadmin_tags %}
+
+<p class="modified">
+    {% if page.get_latest_revision %}
+        {% blocktrans with last_mod=page.get_latest_revision.created_at %}Last modified: <span class="attribute">{{ last_mod }}</span>{% endblocktrans %}
+        {% if page.get_latest_revision.user %}
+            {% blocktrans with modified_by=page.get_latest_revision.user.get_full_name|default:page.get_latest_revision.user.get_username %}by 
+            <span class="attribute">{{ modified_by }}{% endblocktrans %}</span>
+            {% comment %}
+            Having the image here adds a lot of friction to the user moving from date/time of revision and then link to revisions
+            {% if page.get_latest_revision.user.email %}
+                <span class="avatar small icon icon-user"><img src="{% gravatar_url page.get_latest_revision.user.email 25 %}" /></span>
+            {% endif %}
+            {% endcomment %}
+        {% endif %}
+        (<a href="{% url 'wagtailadmin_pages:revisions_index' page.id %}" class="underlined">{% trans 'View revisions' %}</a>)
+    {% endif %}
+</p>

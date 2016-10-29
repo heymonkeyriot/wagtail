@@ -1,5 +1,16 @@
+{% load i18n wagtailadmin_tags %}
+
+{% trans "Status" %}:
+<span class="attribute">{{ page.status_string|title }}</span>
+{% if page.live %}
+	(<a href="{{ page.url }}" target="_blank" class="underlined">View</a>)
+{% endif %}
+
+
+{% comment %}
 {% if page.live %}
     <a href="{{ page.url }}" target="_blank" class="status-tag primary">{{ page.status_string }}</a>
 {% else %}
     <span class="status-tag">{{ page.status_string }}</span>
 {% endif %}
+{% endcomment %}
